@@ -1,6 +1,6 @@
 public class Subset {
     public static void main(String[] args) {
-        int k = Integer.parseInt(args[0]);
+        /*int k = Integer.parseInt(args[0]);
         RandomizedQueue<String> queue = new RandomizedQueue<>();
         String input = StdIn.readString();
         String[] split = input.split(" ");
@@ -16,6 +16,17 @@ public class Subset {
             }
             StdOut.println(str);
             k--;
+        }*/
+        RandomizedQueue<String> rq = new RandomizedQueue<String>();
+        // read strings from std input:
+        while (!StdIn.isEmpty()) {
+            String s = StdIn.readString();
+            rq.enqueue(s);
+        }
+
+        int k = Integer.parseInt(args[0]);
+        for (int i = 0; i < k; i++) {
+            StdOut.println(rq.dequeue());
         }
     }
 }
