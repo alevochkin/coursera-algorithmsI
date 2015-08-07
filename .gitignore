@@ -1,3 +1,7 @@
 .idea
 target
 /*.iml
+/collinear/*.iml
+/percolation/*.iml
+/queues/*.iml
+/collinear/collinear.iml
