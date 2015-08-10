@@ -55,8 +55,10 @@ public class Brute {
                 builder.append(point);
                 builder.append("->");
             }
-            builder.setLength(builder.length() - 1);
-            StdOut.println(builder.toString());
+            builder.setLength(builder.length() - 2);
+            StdOut.print(builder.toString());
+            StdOut.println();
+            builder.setLength(0);
         }
     }
 }
