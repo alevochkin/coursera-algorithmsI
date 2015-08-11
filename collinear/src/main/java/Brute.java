@@ -13,14 +13,17 @@ public class Brute {
         In in = new In(args[0]);
         int number = in.readInt();
         Point[] points = new Point[number];
-        for (int i = 0; i < number; i++) {
-            points[i] = new Point(in.readInt(), in.readInt());
-        }
-
-        List<List<Point>> lines = new LinkedList<>();
 
         StdDraw.setXscale(0, 32768);
         StdDraw.setYscale(0, 32768);
+
+        for (int i = 0; i < number; i++) {
+            Point point = new Point(in.readInt(), in.readInt());
+            points[i] = point;
+            point.draw();
+        }
+
+        List<List<Point>> lines = new LinkedList<>();
 
         for (int i = 0; i < points.length - 1; i++) {
             List<Point> line = new LinkedList<>();
@@ -84,22 +87,26 @@ public class Brute {
     }
 
     private static void printLines(List<List<Point>> lines) {
-        List<Point> pointsToDraw = new LinkedList<>();
         StringBuilder builder = new StringBuilder();
         for (List<Point> line : lines) {
             for (Point point : line) {
                 builder.append(point);
                 builder.append("->");
-                if (!contains(pointsToDraw, point)) {
-                    point.draw();
-                    pointsToDraw.add(point);
-                }
             }
             builder.setLength(builder.length() - 2);
             StdOut.print(builder.toString());
             StdOut.println();
             builder.setLength(0);
-            line.get(0).drawTo(line.get(line.size() - 1));
+            drawLine(line);
         }
+    }
+
+    private static void drawLine(List<Point> line) {
+        line.get(0).drawTo(line.get(line.size() - 1));
+        /*for(int i = 0; i < line.size() - 2; i++) {
+            Point p = line.get(i);
+            Point q = line.get(i + 1);
+            p.drawTo(q);
+        }*/
     }
 }
