@@ -1,4 +1,4 @@
-import org.junit.*;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.hamcrest.core.Is.is;
@@ -7,7 +7,18 @@ import static org.hamcrest.core.Is.is;
  * @author alevochkin.
  */
 public class PointTest {
-    //@Test
+    @Test
+    public void test() {
+        for (int i = 0; i < 50; i++) {
+            for (int j = 0; j < 20; j++) {
+                for (int k = 0; k < 100; k++) {
+                    System.out.println("k=" + k);
+                }
+            }
+        }
+    }
+
+    @Test
     public void testSlope() {
         Point p = new Point(1, 1);
         Point q = new Point(1, 9);
