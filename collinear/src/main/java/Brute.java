@@ -1,6 +1,4 @@
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * @author alevochkin.
@@ -23,90 +21,39 @@ public class Brute {
             point.draw();
         }
 
-        List<List<Point>> lines = new LinkedList<>();
-
-        for (int i = 0; i < points.length - 1; i++) {
-            List<Point> line = new LinkedList<>();
-            Point p = points[i];
-            points[i] = points[0];
-            points[0] = p;
-            for (int j = 1; j < points.length; j++) {
-                Point q = points[j];
-                double slope = p.slopeTo(q);
-                line = new LinkedList<>();
-                line.add(p);
-                line.add(q);
-                for (int k = 1; k < points.length; k++) {
-                    if (k != j) {
-                        Point r = points[k];
-                        if (slope == p.slopeTo(r)) {
-                            line.add(r);
+        for (int p = 0; p < number; p++) {
+            for (int q = p + 1; q < number; q++) {
+                double slopeToQ = points[p].slopeTo(points[q]);
+                for (int r = q + 1; r < number; r++) {
+                    double slopeToR = points[p].slopeTo(points[r]);
+                    if (slopeToQ == slopeToR) {
+                        for (int s = r + 1; s < number; s++) {
+                            double slopToS = points[p].slopeTo(points[s]);
+                            if (slopeToQ == slopToS) {
+                                Point[] line = new Point[4];
+                                line[0] = points[p];
+                                line[1] = points[q];
+                                line[2] = points[r];
+                                line[3] = points[s];
+                                printLine(line);
+                            }
                         }
                     }
                 }
-                addLineWithoutDuplicated(line, lines);
-            }
-            addLineWithoutDuplicated(line, lines);
-        }
-        printLines(lines);
-    }
-
-    private static void addLineWithoutDuplicated(List<Point> points, List<List<Point>> lines) {
-        if (points.size() >= 4) {
-            boolean contains = false;
-            for (List<Point> line : lines) {
-                contains = line.size() >= points.size() && containsItems(line, points);
-                if (contains) {
-                    break;
-                }
-            }
-            if (!contains) {
-                Collections.sort(points);
-                lines.add(points);
             }
         }
     }
 
-    private static <Item> boolean containsItems(List<Item> queue, List<Item> values) {
-        for (Item item : values) {
-            boolean containsValue = contains(queue, item);
-            if (!containsValue) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static <Item> boolean contains(List<Item> queue, Item value) {
-        for (Item item : queue) {
-            if (value.equals(item)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static void printLines(List<List<Point>> lines) {
+    private static void printLine(Point[] line) {
+        Arrays.sort(line);
         StringBuilder builder = new StringBuilder();
-        for (List<Point> line : lines) {
-            for (Point point : line) {
-                builder.append(point);
-                builder.append("->");
-            }
-            builder.setLength(builder.length() - 2);
-            StdOut.print(builder.toString());
-            StdOut.println();
-            builder.setLength(0);
-            drawLine(line);
+        for (Point point : line) {
+            builder.append(point);
+            builder.append("->");
         }
-    }
-
-    private static void drawLine(List<Point> line) {
-        line.get(0).drawTo(line.get(line.size() - 1));
-        /*for(int i = 0; i < line.size() - 2; i++) {
-            Point p = line.get(i);
-            Point q = line.get(i + 1);
-            p.drawTo(q);
-        }*/
+        builder.setLength(builder.length() - 2);
+        StdOut.println(builder.toString());
+        line[0].drawTo(line[3]);
+        //Arrays.min(line).drawTo(Arrays.max(line));
     }
 }
