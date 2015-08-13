@@ -35,7 +35,6 @@ public class Fast {
 
             for (int j = i + 1; j < points.length; j++) {
                 double slope = origin.slopeTo(points[j]);
-                //Point[] aux = copyArray(points, i);
                 List<Point> line = new ArrayList<>();
                 line.add(origin);
                 for (Point point : aux) {
@@ -87,20 +86,6 @@ public class Fast {
         return false;
     }
 
-    /*
-        private static Point[] copyArray(Point[] points, int i) {
-            Point[] result = new Point[points.length - 1];
-            for (int k = 0; k < points.length; k++) {
-                if (k < i) {
-                    result[k] = points[k];
-                } else if (k > i) {
-                    result[k - 1] = points[k];
-                }
-            }
-            return result;
-        }
-
-    */
     private static void printLine(List<Point> line) {
         if (line.size() >= 4) {
             Collections.sort(line);
