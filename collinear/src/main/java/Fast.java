@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,8 +25,7 @@ public class Fast {
             point.draw();
         }
 
-        List<List<Point>> lines = new ArrayList<>();
-
+        Arrays.sort(points);
         for (int i = 0; i < points.length; i++) {
             Point origin = points[i];
             int newLength = points.length - (i + 1);
@@ -40,54 +40,24 @@ public class Fast {
                 for (Point point : aux) {
                     if (origin.slopeTo(point) == slope) {
                         line.add(point);
+                        j++;
                     } else {
-                        printLineWithoutDuplicated(line, lines);
+                        Collections.sort(line);
+                        if (line.size() >= 4) {
+                            printLine(line);
+                        }
                     }
                 }
-                printLineWithoutDuplicated(line, lines);
-            }
-
-        }
-    }
-
-    private static void printLineWithoutDuplicated(List<Point> points, List<List<Point>> lines) {
-        if (points.size() >= 4) {
-            boolean contains = false;
-            for (List<Point> line : lines) {
-                contains = line.size() >= points.size() && containsItems(line, points);
-                if (contains) {
-                    break;
+                Collections.sort(line);
+                if (line.size() >= 4) {
+                    printLine(line);
                 }
             }
-            if (!contains) {
-                Collections.sort(points);
-                lines.add(points);
-                printLine(points);
-            }
-        }
-    }
 
-    private static <Item> boolean containsItems(List<Item> printedLines, List<Item> values) {
-        for (Item item : values) {
-            boolean containsValue = contains(printedLines, item);
-            if (!containsValue) {
-                return false;
-            }
         }
-        return true;
-    }
-
-    private static <Item> boolean contains(List<Item> queue, Item value) {
-        for (Item item : queue) {
-            if (value.equals(item)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     private static void printLine(List<Point> line) {
-        if (line.size() >= 4) {
             Collections.sort(line);
             StringBuilder builder = new StringBuilder();
             for (Point point : line) {
@@ -97,6 +67,5 @@ public class Fast {
             builder.setLength(builder.length() - POINT_SEPARATOR.length());
             StdOut.println(builder.toString());
             Collections.min(line).drawTo(Collections.max(line));
-        }
     }
 }
